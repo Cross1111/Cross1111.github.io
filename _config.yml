@@ -60,21 +60,21 @@ kramdown:
 # disqus_username: 
 
 # Gitalk
-gitalk:
-  enable: true    #是否开启Gitalk评论
-  clientID: Ov23ctcENuAfSZvVLTFW                            #生成的clientID
-  clientSecret: 163f9cf0d5982366a7ec961fe1df59d5edd51212    #生成的clientSecret
-  repo: Cross1111.github.io    #仓库名称
-  owner: Cross1111    #github用户名
-  admin: Cross1111
-  distractionFreeMode: true #是否启用类似FB的阴影遮罩
+# gitalk:
+#   enable: true    #是否开启Gitalk评论
+#   clientID: Ov23ctcENuAfSZvVLTFW                            #生成的clientID
+#   clientSecret: 163f9cf0d5982366a7ec961fe1df59d5edd51212    #生成的clientSecret
+#   repo: Cross1111.github.io    #仓库名称
+#   owner: Cross1111    #github用户名
+#   admin: Cross1111
+#   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
 # 统计
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: b50bf2b12b5338a1845e33832976fd68
+#ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
 ga_track_id: 'G-3MJ9ENMNPE'            # Format: UA-xxxxxx-xx
