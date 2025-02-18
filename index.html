@@ -167,12 +167,141 @@ description: "Never give up!!!"
             padding: 20px;
         }
     }
+
+    /* 统计卡片样式 */
+    .stats-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+    
+    .stats-item {
+        padding: 10px;
+    }
+    
+    .stats-number {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3273dc;
+        margin-bottom: 5px;
+    }
+    
+    .stats-label {
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* 时间轴样式 */
+    .timeline-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .timeline-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #3273dc;
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-bottom: 20px;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -34px;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #3273dc;
+        border: 2px solid #fff;
+    }
+    
+    .timeline-date {
+        font-size: 12px;
+        color: #666;
+    }
+    
+    .timeline-content {
+        margin-top: 5px;
+        font-size: 14px;
+    }
 </style>
 
 <!-- 页面头部 -->
-<div class="page-header">
+<!-- <div class="page-header">
     <div class="site-heading">
         <h1 style="font-size: 24px; margin: 0;">最新文章</h1>
+    </div>
+</div> -->
+
+<!-- 在文章列表前添加统计卡片 -->
+<div class="stats-card">
+    <div class="stats-item">
+        <div class="stats-number">{{ site.posts.size }}</div>
+        <div class="stats-label">文章</div>
+    </div>
+    <div class="stats-item">
+        <div class="stats-number">{{ site.tags.size }}</div>
+        <div class="stats-label">标签</div>
+    </div>
+    <div class="stats-item">
+        <div class="stats-number" id="totalWords">0</div>
+        <div class="stats-label">总字数</div>
+    </div>
+</div>
+
+<script>
+    // 计算总字数
+    document.addEventListener('DOMContentLoaded', function() {
+        let totalWords = 0;
+        document.querySelectorAll('.post-preview').forEach(post => {
+            const words = parseInt(post.querySelector('.post-meta .fa-clock-o').nextSibling.textContent.match(/\d+/)[0]);
+            totalWords += words * 400; // 因为我们之前用400字/分钟计算的
+        });
+        document.getElementById('totalWords').textContent = Math.floor(totalWords / 1000) + 'k';
+    });
+</script>
+
+<!-- 在文章列表前添加时间轴 -->
+<div class="timeline-card">
+    <div class="timeline-title">最近更新</div>
+    <div class="timeline">
+        {% for post in site.posts limit:5 %}
+        <div class="timeline-item">
+            <div class="timeline-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+            <div class="timeline-content">
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 
