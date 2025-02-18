@@ -22,7 +22,7 @@ layout: default
     }
     {% endif %}
 </style>
-<header class="intro-header" >
+<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
     <div class="header-mask"></div>
     <div class="container">
         <div class="row">
@@ -40,7 +40,14 @@ layout: default
                     {% comment %} if page.subtitle {% endcomment %}
                     <h2 class="subheading">{{ page.subtitle }}</h2>
                     {% comment %} endif {% endcomment %}
-                    <span class="meta">Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.title }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}</span>
+                    <span class="meta">
+                        Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.title }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}
+                        <!-- 添加阅读时间估计 -->
+                        &nbsp;·&nbsp;
+                        {% assign words = content | strip_html | size %}
+                        {% assign read_time = words | divided_by: 200 | plus: 1 %}
+                        预计阅读时间 {{ read_time }} 分钟
+                    </span>
                 </div>
             </div>
         </div>
@@ -205,7 +212,7 @@ layout: default
 <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
 <script>
     async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
-        // BY Fix:去除标题前的‘#’ issues:<https://github.com/qiubaiying/qiubaiying.github.io/issues/137>
+        // BY Fix:去除标题前的'#' issues:<https://github.com/qiubaiying/qiubaiying.github.io/issues/137>
         // anchors.options = {
         //   visible: 'always',
         //   placement: 'right',
