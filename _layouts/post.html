@@ -255,6 +255,14 @@ layout: default
                     </div>
                     <!-- disqus 评论框 end -->
                     {% endif %}
+
+                    <!-- 在文章内容后添加点赞按钮 -->
+                    <div class="post-like-container">
+                        <button id="likeButton" class="like-button">
+                            <i class="fa fa-heart"></i>
+                            <span id="likeCount">0</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -392,3 +400,159 @@ layout: default
         box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 </style>
+
+<style>
+    /* 点赞按钮样式 */
+    .post-like-container {
+        text-align: center;
+        margin: 40px 0;
+    }
+    
+    .like-button {
+        background: white;
+        border: 2px solid #ff4b6c;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-size: 16px;
+        color: #ff4b6c;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        outline: none;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .like-button:hover {
+        background: #ff4b6c;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 75, 108, 0.3);
+    }
+    
+    .like-button.liked {
+        background: #ff4b6c;
+        color: white;
+    }
+    
+    .like-button i {
+        margin-right: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .like-button:hover i {
+        transform: scale(1.2);
+    }
+    
+    /* 点赞动画 */
+    @keyframes likeAnimation {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+    }
+    
+    .like-button.animate i {
+        animation: likeAnimation 0.5s ease;
+    }
+    
+    /* 点赞数量动画 */
+    @keyframes countAnimation {
+        0% { transform: translateY(0); opacity: 1; }
+        50% { transform: translateY(-20px); opacity: 0; }
+        51% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    #likeCount {
+        display: inline-block;
+        min-width: 20px;
+    }
+    
+    #likeCount.animate {
+        animation: countAnimation 0.5s ease;
+    }
+    
+    /* 点赞特效 */
+    .like-particle {
+        position: absolute;
+        pointer-events: none;
+        color: #ff4b6c;
+        font-size: 14px;
+        opacity: 0;
+    }
+    
+    @keyframes particleAnimation {
+        0% { transform: translate(0, 0); opacity: 1; }
+        100% { transform: translate(var(--tx), -100px); opacity: 0; }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const likeButton = document.getElementById('likeButton');
+        const likeCount = document.getElementById('likeCount');
+        const postId = '{{ page.url }}'; // 使用文章URL作为唯一标识
+        
+        // 从localStorage获取点赞状态
+        const likes = JSON.parse(localStorage.getItem('postLikes') || '{}');
+        const currentLikes = likes[postId] || 0;
+        likeCount.textContent = currentLikes;
+        
+        if (likes[postId]) {
+            likeButton.classList.add('liked');
+        }
+        
+        // 创建点赞特效
+        function createParticle(x, y) {
+            const particle = document.createElement('span');
+            particle.className = 'like-particle';
+            particle.innerHTML = '❤';
+            
+            // 随机位置和动画
+            const tx = (Math.random() - 0.5) * 100;
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.animation = 'particleAnimation 1s ease forwards';
+            
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1000);
+        }
+        
+        likeButton.addEventListener('click', function(e) {
+            const rect = likeButton.getBoundingClientRect();
+            const isLiked = likeButton.classList.contains('liked');
+            
+            // 更新点赞状态
+            if (!isLiked) {
+                likes[postId] = (likes[postId] || 0) + 1;
+                likeButton.classList.add('liked');
+                
+                // 创建多个点赞特效
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createParticle(
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2
+                        );
+                    }, i * 100);
+                }
+            } else {
+                likes[postId] = Math.max(0, (likes[postId] || 0) - 1);
+                likeButton.classList.remove('liked');
+            }
+            
+            // 更新显示和存储
+            localStorage.setItem('postLikes', JSON.stringify(likes));
+            likeCount.textContent = likes[postId] || 0;
+            
+            // 添加动画
+            likeButton.classList.add('animate');
+            likeCount.classList.add('animate');
+            
+            setTimeout(() => {
+                likeButton.classList.remove('animate');
+                likeCount.classList.remove('animate');
+            }, 500);
+        });
+    });
+</script>
