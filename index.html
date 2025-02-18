@@ -1,8 +1,183 @@
 ---
 layout: page
-description: "Thinking will not overcome fear but action will."
+description: "Never give up!!!"
 ---
 
+<style>
+    /* 主页整体样式 */
+    .page-header {
+        background: linear-gradient(135deg, #00223E, #1B4F72);
+        padding: 100px 0;
+        text-align: center;
+        margin-bottom: 50px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('{{ site.baseurl }}/img/pattern.png');
+        opacity: 0.1;
+    }
+
+    .site-heading {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 文章列表样式 */
+    .post-preview {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .post-preview:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .post-preview > a {
+        color: #404040;
+        text-decoration: none;
+    }
+
+    .post-preview > a:hover {
+        text-decoration: none;
+    }
+
+    .post-title {
+        font-size: 28px;
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .post-subtitle {
+        font-size: 18px;
+        color: #666;
+        margin: 0 0 10px 0;
+    }
+
+    .post-meta {
+        color: #999;
+        font-style: italic;
+        margin-top: 15px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    /* 标签样式 */
+    .post-tags {
+        margin-top: 15px;
+    }
+
+    .post-tags .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        margin-right: 8px;
+        background: #f0f5ff;
+        color: #3273dc;
+        border-radius: 15px;
+        font-size: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .post-tags .tag:hover {
+        background: #3273dc;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    /* 分页样式 */
+    .pager {
+        margin: 40px 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .pager li > a {
+        background: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .pager li > a:hover {
+        background: #3273dc;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(50,115,220,0.3);
+    }
+
+    /* 文章预览动画 */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .post-preview {
+        animation: fadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .post-preview:nth-child(2) { animation-delay: 0.2s; }
+    .post-preview:nth-child(3) { animation-delay: 0.4s; }
+    .post-preview:nth-child(4) { animation-delay: 0.6s; }
+
+    /* 阅读时间和日期图标 */
+    .post-meta i {
+        margin-right: 5px;
+        color: #3273dc;
+    }
+
+    /* 响应式优化 */
+    @media (max-width: 768px) {
+        .post-title {
+            font-size: 24px;
+        }
+        
+        .post-subtitle {
+            font-size: 16px;
+        }
+        
+        .post-preview {
+            padding: 20px;
+        }
+    }
+</style>
+
+<!-- 页面头部 -->
+<div class="page-header">
+    <div class="site-heading">
+        <h1>{{ site.title }}</h1>
+        <span class="subheading">{{ page.description }}</span>
+    </div>
+</div>
+
+<!-- 文章列表 -->
 {% for post in paginator.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
@@ -14,28 +189,34 @@ description: "Thinking will not overcome fear but action will."
             {{ post.subtitle }}
         </h3>
         {% endif %}
-        <div class="post-content-preview">
-            {{ post.content | strip_html | truncate:200 }}
-        </div>
     </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
-    </p>
+    <div class="post-meta">
+        <span><i class="fa fa-calendar"></i> {{ post.date | date: "%Y-%m-%d" }}</span>
+        <span><i class="fa fa-clock-o"></i> 
+            {% assign words = post.content | strip_html | size %}
+            {% assign read_time = words | divided_by: 400 | plus: 1 %}
+            预计阅读时间 {{ read_time }} 分钟
+        </span>
+    </div>
+    <div class="post-tags">
+        {% for tag in post.tags %}
+        <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+    </div>
 </div>
-<hr>
 {% endfor %}
 
-<!-- Pager -->
+<!-- 分页链接 -->
 {% if paginator.total_pages > 1 %}
 <ul class="pager">
     {% if paginator.previous_page %}
     <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; 上一页</a>
     </li>
     {% endif %}
     {% if paginator.next_page %}
     <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">下一页 &rarr;</a>
     </li>
     {% endif %}
 </ul>
