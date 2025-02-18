@@ -202,6 +202,48 @@
     .navbar-custom .navbar-toggle:hover .icon-bar:nth-child(3) {
         transform: translateY(-1px) rotate(-45deg);
     }
+
+    /* 标题动画效果 */
+    @keyframes titlePulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    
+    @keyframes titleGlow {
+        0% { text-shadow: 0 0 5px rgba(50,115,220,0); }
+        50% { text-shadow: 0 0 20px rgba(50,115,220,0.5); }
+        100% { text-shadow: 0 0 5px rgba(50,115,220,0); }
+    }
+    
+    .navbar-custom .navbar-brand {
+        position: relative;
+        display: inline-block;
+        padding: 15px;
+        font-weight: 700;
+        color: #333;
+        transition: all 0.3s ease;
+        animation: titlePulse 2s ease-in-out infinite,
+                  titleGlow 2s ease-in-out infinite;
+    }
+    
+    .navbar-custom .navbar-brand:hover {
+        animation: none;
+        transform: scale(1.1);
+        color: #3273dc;
+    }
+    
+    /* 添加彩虹文字效果 */
+    .navbar-custom .navbar-brand span {
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar-custom .navbar-brand:hover span:nth-child(1) { color: #ff4b6c; }
+    .navbar-custom .navbar-brand:hover span:nth-child(2) { color: #ff9f3e; }
+    .navbar-custom .navbar-brand:hover span:nth-child(3) { color: #3273dc; }
+    .navbar-custom .navbar-brand:hover span:nth-child(4) { color: #17c666; }
+    .navbar-custom .navbar-brand:hover span:nth-child(5) { color: #8e44ad; }
 </style>
 
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -214,7 +256,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
+            <a class="navbar-brand" href="{{ site.baseurl }}/">
+                <span>Y</span><span>H</span><span>Y</span> <span>B</span><span>log</span>
+            </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
