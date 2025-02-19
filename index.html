@@ -5,30 +5,29 @@ description: "Never give up!!!"
 
 <style>
     /* 主页整体样式 */
-    .page-header {
-        background: linear-gradient(135deg, #00223E, #1B4F72);
-        padding: 40px 0;  /* 减小padding */
-        text-align: center;
-        margin-bottom: 50px;
-        color: #fff;
+    .intro-header {
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;  /* 添加视差效果 */
+        height: 300px;  /* 减小高度，原来可能是500px或更大 */
+        display: flex;
+        align-items: center;
         position: relative;
-        overflow: hidden;
-    }
-
-    .page-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('{{ site.baseurl }}/img/pattern.png');
-        opacity: 0.1;
     }
 
     .site-heading {
-        position: relative;
-        z-index: 1;
+        padding: 50px 0;  /* 减小内边距 */
+    }
+
+    /* 优化响应式显示 */
+    @media only screen and (max-width: 767px) {
+        .intro-header {
+            height: 200px;  /* 移动端更小的高度 */
+        }
+        
+        .site-heading {
+            padding: 30px 0;
+        }
     }
 
     /* 文章列表样式 */
