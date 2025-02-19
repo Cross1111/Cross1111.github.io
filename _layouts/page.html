@@ -2,6 +2,115 @@
 layout: default
 ---
 
+<style>
+    /* 页面头部图片样式 */
+    .intro-header {
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 300px;  /* 减小高度 */
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .site-heading, .post-heading, .page-heading {
+        padding: 50px 0;  /* 减小内边距 */
+    }
+
+    /* 响应式调整 */
+    @media only screen and (max-width: 767px) {
+        .intro-header {
+            height: 200px;  /* 移动端更小的高度 */
+        }
+        
+        .site-heading, .post-heading, .page-heading {
+            padding: 30px 0;
+        }
+    }
+
+    /* 头像样式美化 */
+    .short-about img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        background: #fff;
+        padding: 4px;
+    }
+    
+    /* 头像悬停效果 */
+    .short-about img:hover {
+        transform: rotate(5deg) scale(1.1);
+        box-shadow: 0 0 30px rgba(50,115,220,0.3);
+        border-color: #3273dc;
+    }
+    
+    /* 头像容器样式 */
+    .short-about a {
+        display: inline-block;
+        padding: 4px;
+        position: relative;
+    }
+    
+    /* 头像装饰效果 */
+    .short-about a::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border: 2px dashed #3273dc;
+        border-radius: 50%;
+        animation: rotate 10s linear infinite;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .short-about a:hover::before {
+        opacity: 0.5;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* 头像下方的社交媒体图标美化 */
+    .short-about .list-inline {
+        margin-top: 20px;
+    }
+    
+    .short-about .fa-stack {
+        transition: all 0.3s ease;
+    }
+    
+    .short-about .fa-stack:hover {
+        transform: translateY(-3px);
+    }
+    
+    .short-about .fa-circle {
+        color: #3273dc;
+        transition: all 0.3s ease;
+    }
+    
+    .short-about .fa-stack:hover .fa-circle {
+        color: #2460c1;
+    }
+    
+    /* 个人描述文字样式 */
+    .short-about p {
+        margin-top: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #666;
+    }
+</style>
+
 <!-- Page Header -->
 <header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
     <div class="container">
