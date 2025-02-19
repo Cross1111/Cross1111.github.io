@@ -249,49 +249,46 @@
     .theme-switch-wrapper {
         display: flex;
         align-items: center;
-        padding: 15px;
+        height: 100%;  /* 确保和其他导航项一样高 */
     }
     
     .theme-toggle {
         background: none;
         border: none;
-        padding: 0;
+        padding: 20px;  /* 和其他导航项保持一致的内边距 */
         cursor: pointer;
-        font-size: 20px;
+        font-size: 18px;
         color: #666;
         transition: all 0.3s ease;
-        position: relative;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 5px;  /* 和其他导航项保持一致的外边距 */
     }
     
     .theme-toggle:hover {
-        background: rgba(0,0,0,0.05);
+        color: #3273dc;
     }
     
     .theme-toggle i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         transition: all 0.3s ease;
     }
     
-    .theme-toggle .light-icon {
-        opacity: 1;
+    /* 使用不同的图标 */
+    .theme-toggle .light-icon::before {
+        content: '\f186';  /* 月亮图标 */
     }
     
-    .theme-toggle .dark-icon {
-        opacity: 0;
+    .theme-toggle .dark-icon::before {
+        content: '\f185';  /* 太阳图标 */
     }
     
     [data-theme="dark"] .theme-toggle .light-icon {
-        opacity: 0;
+        display: none;
     }
     
-    [data-theme="dark"] .theme-toggle .dark-icon {
-        opacity: 1;
+    [data-theme="light"] .theme-toggle .dark-icon {
+        display: none;
     }
 </style>
 
@@ -331,8 +328,7 @@
                     </li>
                     <li class="theme-switch-wrapper">
                         <button id="theme-toggle" class="theme-toggle">
-                            <i class="fa fa-sun-o light-icon"></i>
-                            <i class="fa fa-moon-o dark-icon"></i>
+                            <i class="fa fa-adjust"></i>  <!-- 使用调节图标 -->
                         </button>
                     </li>
                 </ul>
