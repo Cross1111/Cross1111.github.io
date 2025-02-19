@@ -31,23 +31,26 @@ layout: default
 
     /* 头像样式美化 */
     .short-about img {
-        width: 120px;  /* 固定尺寸的正方形 */
-        height: 120px;
-        border-radius: 15px;  /* 稍微圆角的方形 */
+        width: 150px;  /* 增大尺寸 */
+        height: 150px;
+        border-radius: 20px;  /* 增大圆角 */
         box-shadow: 0 0 20px rgba(50,115,220,0.2);
         transition: all 0.5s ease;
         position: relative;
         object-fit: cover;
+        display: block;  /* 确保图片和容器完全贴合 */
+        margin: 0;  /* 移除可能的边距 */
     }
     
     /* 头像容器样式 */
     .short-about a {
         display: inline-block;
         position: relative;
-        padding: 3px;
+        padding: 4px;  /* 稍微增加内边距 */
         background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1, #ff9ff3);
-        border-radius: 17px;  /* 比图片的圆角大一点 */
+        border-radius: 24px;  /* 与图片圆角匹配 */
         transition: all 0.3s ease;
+        line-height: 0;  /* 移除底部间隙 */
     }
     
     /* 头像悬停效果 */
@@ -63,69 +66,80 @@ layout: default
     
     /* 彩虹边框动画 */
     @keyframes borderRotate {
-        0% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
     
-    /* 烟花特效 */
-    .short-about a:hover::after {
+    /* 烟花特效 - 增加更多粒子 */
+    .short-about a:hover::before,
+    .short-about a:hover::after,
+    .short-about a:hover span {
         content: '';
         position: absolute;
-        width: 4px;
-        height: 4px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        background: #ff6b6b;
-        animation: firework 0.8s ease-out;
         animation-fill-mode: forwards;
     }
     
-    @keyframes firework {
-        0% {
-            transform: translate(60px, 60px) scale(0);
-            opacity: 1;
-        }
-        50% {
-            transform: translate(60px, 30px) scale(1.5);
-            opacity: 0.5;
-        }
-        100% {
-            transform: translate(60px, 0) scale(2);
-            opacity: 0;
-        }
+    /* 第一个烟花 */
+    .short-about a:hover::before {
+        background: #ff6b6b;
+        animation: firework1 0.8s ease-out;
     }
     
-    /* 多个烟花粒子 */
-    .short-about a:hover::before {
-        content: '';
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
+    /* 第二个烟花 */
+    .short-about a:hover::after {
         background: #48dbfb;
         animation: firework2 0.8s ease-out 0.1s;
-        animation-fill-mode: forwards;
+    }
+    
+    /* 添加更多烟花粒子 */
+    .short-about a:hover span:nth-child(1) {
+        background: #feca57;
+        animation: firework3 0.8s ease-out 0.2s;
+    }
+    
+    .short-about a:hover span:nth-child(2) {
+        background: #1dd1a1;
+        animation: firework4 0.8s ease-out 0.3s;
+    }
+    
+    .short-about a:hover span:nth-child(3) {
+        background: #ff9ff3;
+        animation: firework5 0.8s ease-out 0.4s;
+    }
+    
+    /* 烟花动画 */
+    @keyframes firework1 {
+        0% { transform: translate(75px, 75px) scale(0); opacity: 1; }
+        50% { transform: translate(75px, 25px) scale(2); opacity: 0.5; }
+        100% { transform: translate(75px, -25px) scale(3); opacity: 0; }
     }
     
     @keyframes firework2 {
-        0% {
-            transform: translate(-60px, 60px) scale(0);
-            opacity: 1;
-        }
-        50% {
-            transform: translate(-60px, 30px) scale(1.5);
-            opacity: 0.5;
-        }
-        100% {
-            transform: translate(-60px, 0) scale(2);
-            opacity: 0;
-        }
+        0% { transform: translate(-75px, 75px) scale(0); opacity: 1; }
+        50% { transform: translate(-75px, 25px) scale(2); opacity: 0.5; }
+        100% { transform: translate(-75px, -25px) scale(3); opacity: 0; }
+    }
+    
+    @keyframes firework3 {
+        0% { transform: translate(75px, -75px) scale(0); opacity: 1; }
+        50% { transform: translate(25px, -25px) scale(2); opacity: 0.5; }
+        100% { transform: translate(-25px, 25px) scale(3); opacity: 0; }
+    }
+    
+    @keyframes firework4 {
+        0% { transform: translate(-75px, -75px) scale(0); opacity: 1; }
+        50% { transform: translate(-25px, -25px) scale(2); opacity: 0.5; }
+        100% { transform: translate(25px, 25px) scale(3); opacity: 0; }
+    }
+    
+    @keyframes firework5 {
+        0% { transform: translate(0, 75px) scale(0); opacity: 1; }
+        50% { transform: translate(0, 0) scale(2); opacity: 0.5; }
+        100% { transform: translate(0, -75px) scale(3); opacity: 0; }
     }
     
     /* 头像下方的社交媒体图标美化 */
@@ -361,3 +375,15 @@ layout: default
         {% endif %}
 	</div>
 </div>
+
+<!-- 在头像容器中添加烟花粒子的span -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatarLink = document.querySelector('.short-about a');
+        // 添加5个span作为额外的烟花粒子
+        for(let i = 0; i < 3; i++) {
+            const span = document.createElement('span');
+            avatarLink.appendChild(span);
+        }
+    });
+</script>
