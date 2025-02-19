@@ -43,4 +43,88 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
+
+    <style>
+        /* 暗黑模式样式 */
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e4e4e4;
+            --link-color: #58a6ff;
+            --border-color: #333;
+            --card-bg: #242424;
+            --header-bg: rgba(36, 36, 36, 0.95);
+        }
+        
+        [data-theme="light"] {
+            --bg-color: #fff;
+            --text-color: #333;
+            --link-color: #3273dc;
+            --border-color: #eee;
+            --card-bg: #fff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        /* 导航栏暗黑模式 */
+        [data-theme="dark"] .navbar-custom {
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+        }
+        
+        [data-theme="dark"] .navbar-custom .nav > li > a {
+            color: var(--text-color);
+        }
+        
+        /* 文章卡片暗黑模式 */
+        [data-theme="dark"] .post-preview {
+            background: var(--card-bg);
+        }
+        
+        [data-theme="dark"] .post-preview a {
+            color: var(--text-color);
+        }
+        
+        /* 其他元素的暗黑模式 */
+        [data-theme="dark"] .sidebar-container {
+            background: var(--card-bg);
+        }
+        
+        [data-theme="dark"] .short-about img {
+            border-color: var(--border-color);
+            background: var(--card-bg);
+        }
+    </style>
+
+    <script>
+        // 主题切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // 从localStorage获取主题设置
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+            } else if (prefersDarkScheme.matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // 切换主题
+            themeToggle.addEventListener('click', function() {
+                let theme = document.documentElement.getAttribute('data-theme');
+                let newTheme = theme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 添加切换动画
+                document.documentElement.style.transition = 'all 0.3s ease';
+            });
+        });
+    </script>
 </head>

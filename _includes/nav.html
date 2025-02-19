@@ -244,6 +244,55 @@
     .navbar-custom .navbar-brand:hover span:nth-child(3) { color: #3273dc; }
     .navbar-custom .navbar-brand:hover span:nth-child(4) { color: #17c666; }
     .navbar-custom .navbar-brand:hover span:nth-child(5) { color: #8e44ad; }
+
+    /* 主题切换按钮样式 */
+    .theme-switch-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+    }
+    
+    .theme-toggle {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 20px;
+        color: #666;
+        transition: all 0.3s ease;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    
+    .theme-toggle:hover {
+        background: rgba(0,0,0,0.05);
+    }
+    
+    .theme-toggle i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+    }
+    
+    .theme-toggle .light-icon {
+        opacity: 1;
+    }
+    
+    .theme-toggle .dark-icon {
+        opacity: 0;
+    }
+    
+    [data-theme="dark"] .theme-toggle .light-icon {
+        opacity: 0;
+    }
+    
+    [data-theme="dark"] .theme-toggle .dark-icon {
+        opacity: 1;
+    }
 </style>
 
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -279,6 +328,12 @@
                         <a href="{{ site.baseurl }}/tags">
                             <i class="fa fa-tags"></i> Tags
                         </a>
+                    </li>
+                    <li class="theme-switch-wrapper">
+                        <button id="theme-toggle" class="theme-toggle">
+                            <i class="fa fa-sun-o light-icon"></i>
+                            <i class="fa fa-moon-o dark-icon"></i>
+                        </button>
                     </li>
                 </ul>
             </div>

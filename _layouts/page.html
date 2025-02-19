@@ -31,8 +31,8 @@ layout: default
 
     /* 头像样式美化 */
     .short-about img {
-        width: 150px;
-        height: 150px;
+        width: 128px;  /* 调整为固定尺寸 */
+        height: 128px;
         border-radius: 50%;
         border: 3px solid #fff;
         box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -40,13 +40,7 @@ layout: default
         position: relative;
         background: #fff;
         padding: 4px;
-    }
-    
-    /* 头像悬停效果 */
-    .short-about img:hover {
-        transform: rotate(5deg) scale(1.1);
-        box-shadow: 0 0 30px rgba(50,115,220,0.3);
-        border-color: #3273dc;
+        object-fit: cover;  /* 确保图片不变形 */
     }
     
     /* 头像容器样式 */
@@ -56,28 +50,53 @@ layout: default
         position: relative;
     }
     
-    /* 头像装饰效果 */
-    .short-about a::before {
+    /* 多重环绕线条效果 */
+    .short-about a::before,
+    .short-about a::after {
         content: '';
         position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        border: 2px dashed #3273dc;
         border-radius: 50%;
         animation: rotate 10s linear infinite;
         opacity: 0;
         transition: all 0.3s ease;
     }
     
-    .short-about a:hover::before {
+    /* 内层虚线 */
+    .short-about a::before {
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        border: 2px dashed #3273dc;
+        animation-duration: 10s;
+    }
+    
+    /* 外层虚线 */
+    .short-about a::after {
+        top: -16px;
+        left: -16px;
+        right: -16px;
+        bottom: -16px;
+        border: 2px dashed #ff4b6c;
+        animation-duration: 15s;
+        animation-direction: reverse;
+    }
+    
+    .short-about a:hover::before,
+    .short-about a:hover::after {
         opacity: 0.5;
     }
     
     @keyframes rotate {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
+    }
+    
+    /* 头像悬停效果 */
+    .short-about img:hover {
+        transform: rotate(5deg) scale(1.05);  /* 减小放大比例 */
+        box-shadow: 0 0 30px rgba(50,115,220,0.3);
+        border-color: #3273dc;
     }
     
     /* 头像下方的社交媒体图标美化 */
